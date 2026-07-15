@@ -1,8 +1,8 @@
-<x-layouts.dashboard-layout title="Dashboard" heading="Good to see you, {{ $user->name }}" description="Keep your resumes organized and prepare for the roles you want.">
+<x-layouts.dashboard-layout title="Dashboard" heading="Good to see you, {{ $user->name }}"
+    description="Keep your resumes organized and prepare for the roles you want.">
     <div class="grid gap-4 sm:grid-cols-3">
         <!-- Card: Total Resumes -->
-        <div
-            class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-slate-400 text-sm font-medium">Total Resumes</p>
@@ -18,8 +18,7 @@
         </div>
 
         <!-- Card: Total Analyses -->
-        <div
-            class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-slate-400 text-sm font-medium">Analyses Performed</p>
@@ -35,12 +34,11 @@
         </div>
 
         <!-- Card: Avg Score -->
-        <div
-            class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-slate-400 text-sm font-medium">Average Score</p>
-                    <p class="mt-2 text-3xl font-bold text-white">{{ $averageScore ? $averageScore.'%' : '—' }}</p>
+                    <p class="mt-2 text-3xl font-bold text-white">{{ $averageScore ? $averageScore . '%' : '—' }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,11 +55,11 @@
         <h2 class="mb-4 text-lg font-semibold text-white">Start here</h2>
         <div class="grid gap-4 md:grid-cols-2">
             <!-- Upload Resume Button -->
-            <a href="{{ route('resumes.index') }}"
+            <a href="{{ route('dashboard.job-seeker.resumes.index') }}"
                 class="group rounded-2xl border border-blue-400/20 bg-gradient-to-br from-blue-500/20 to-indigo-500/10 p-6 transition hover:border-blue-400/50">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h4 class="text-lg font-bold mb-2">Upload Resume</h4>
+                        <h4 class="text-lg font-bold mb-2">Manage Resumes</h4>
                         <p class="text-blue-100 text-sm">Add a new resume for analysis</p>
                     </div>
                     <svg class="w-8 h-8 opacity-50 group-hover:opacity-100 transition" fill="none"
@@ -93,7 +91,9 @@
     <div class="mt-8 rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 class="text-lg font-semibold text-white">Your next step</h2>
         <div class="py-8">
-            <p class="text-sm text-slate-400">Upload a resume, then paste a job description to receive a focused match analysis.</p>
+            <p class="text-sm text-slate-400">Upload a resume, then paste a job description to receive a focused
+                match
+                analysis.</p>
         </div>
     </div>
 </x-layouts.dashboard-layout>

@@ -17,17 +17,24 @@ class ResumeUpload extends Component
     public $resumes = [];
     public $uploading = false; // Track upload progress
     public $message = ''; // Success/error message
+    public $page = 'index';
     public $testCounter = 0; // Connection test counter
 
     public function incrementTest()
     {
         $this->testCounter++;
     }
+    public function changePage()
+    {
+        
+        $this->page == 'index'?$this->page = 'upload':$this->page = 'index';
+    }
 
     public function mount()
     {
         // Load user's existing resumes
         $this->loadResumes();
+        
     }
 
     // Reload resumes from database
@@ -84,10 +91,12 @@ class ResumeUpload extends Component
             // Reset form and reload list
             $this->reset(['resume_file', 'title']);
             $this->loadResumes();
-            $this->message = '✓ Resume uploaded successfully!';
-
-            // Clear message after 3 seconds
+           
             $this->dispatch('closeMessage');
+            $this->page = 'index'; // Switch back to index page after upload
+             $this->message = '✓ Resume uploaded successfully!';
+            // Clear message after 3 seconds
+            
         } catch (\Exception $e) {
             $this->message = '✗ Upload failed: ' . $e->getMessage();
         }

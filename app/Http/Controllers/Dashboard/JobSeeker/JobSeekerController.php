@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\JobSeeker;
 
 use App\Http\Controllers\Controller;
 use App\Models\Analysis;
@@ -39,26 +39,6 @@ class JobSeekerController extends Controller implements HasMiddleware
             'resumeCount' => Resume::where('user_id', $user->id)->count(),
             'analysisCount' => Analysis::where('user_id', $user->id)->count(),
             'averageScore' => Analysis::where('user_id', $user->id)->avg('match_score'),
-        ]);
-    }
-
-    // Show Resume Analyze Page
-    public function analyze()
-    {
-        return view('dashboard.job-seeker.analyze', [
-            'pageTitle' => 'Analyze Resume - Resume AI',
-            'pageHeading' => 'Analyze Your Resume',
-            'pageDescription' => 'Get AI-powered insights and recommendations',
-        ]);
-    }
-
-    // Show Analysis Results
-    public function results($analysisId)
-    {
-        return view('dashboard.job-seeker.results', [
-            'pageTitle' => 'Analysis Results - Resume AI',
-            'pageHeading' => 'Your Analysis Results',
-            'analysisId' => $analysisId,
         ]);
     }
 }

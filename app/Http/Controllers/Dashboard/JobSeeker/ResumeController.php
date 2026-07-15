@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard\JobSeeker;
 
+use App\Http\Controllers\Controller;
 use App\Models\Resume;
 use App\Services\ResumeParserService;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class ResumeController extends Controller
     // }
     public function index()
     {
-        return view('resumes.index', [
+        return view('dashboard.job-seeker.resumes.index', [
             'pageTitle' => 'Resumes - Resume AI',
             'pageHeading' => 'Upload & Manage Resumes',
             'pageDescription' => 'Upload your resumes for AI-powered analysis and recruiter matching',

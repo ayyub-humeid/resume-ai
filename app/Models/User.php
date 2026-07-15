@@ -40,6 +40,11 @@ class User extends Authenticatable
     {
         return $this->role === 'recruiter';
     }
+     public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
 
     // Get dashboard URL based on role
     public function getDashboardUrl(): string

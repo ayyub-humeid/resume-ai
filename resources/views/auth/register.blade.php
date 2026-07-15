@@ -47,7 +47,8 @@
                         class="w-full rounded-lg border bg-slate-800 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 @error('name') border-red-400 @else border-slate-700 @enderror"
                         placeholder="Alex Morgan">
                     @error('name')
-                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                        {{-- <p class="mt-2 text-sm text-red-400">{{ $message }}</p> --}}
+                        <x-general-components.validation-input-error-message :message="$message" />
                     @enderror
                 </div>
                 <div class="sm:col-span-2">
