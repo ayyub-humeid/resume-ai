@@ -47,7 +47,8 @@
                             </div>
                             <div class="flex gap-2"><button wire:click="show({{ $analysis->id }})"
                                     class="rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">View</button><button
-                                    wire:click="askToDelete({{ $analysis->id }})"
+                                    {{-- wire:click="askToDelete({{ $analysis->id }})" --}} wire:click="delete({{ $analysis->id }})"
+                                    wire:confirm="Delete this analysis?"
                                     class="rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-red-500/10 hover:text-red-300"
                                     aria-label="Delete analysis">Delete</button></div>
                         </div>

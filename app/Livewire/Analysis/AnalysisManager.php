@@ -90,12 +90,12 @@ class AnalysisManager extends Component
         $this->page = 'show';
     }
 
-    public function askToDelete(int $analysisId): void
-    {
-        $this->ownedAnalysis($analysisId);
-        $this->pendingDeletionId = $analysisId;
-        $this->dispatch('confirmation-requested');
-    }
+    // public function askToDelete(int $analysisId): void
+    // {
+    //     $this->ownedAnalysis($analysisId);
+    //     $this->pendingDeletionId = $analysisId;
+    //     $this->dispatch('confirmation-requested');
+    // }
 
     public function generateCoverLetter(CoverLetterGeneratorService $service): void
     {
@@ -142,9 +142,11 @@ class AnalysisManager extends Component
         $this->draftCoverLetter = null;
     }
 
-    public function delete(): void
+    public function delete(int $analysisId): void
     {
-        if (! $this->pendingDeletionId) return;
+        // if (! $this->pendingDeletionId) return;
+         $this->ownedAnalysis($analysisId);
+        $this->pendingDeletionId = $analysisId;
 
         $analysis = $this->ownedAnalysis($this->pendingDeletionId);
         $job = $analysis->job;
