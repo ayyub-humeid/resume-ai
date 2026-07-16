@@ -10,4 +10,6 @@ class JobListing extends Model
     protected $fillable = ['user_id', 'title', 'company', 'description', 'source_url', 'status'];
 
     public function analyses(): HasMany { return $this->hasMany(Analysis::class, 'job_id'); }
+
+    public function candidates(): HasMany { return $this->hasMany(Candidate::class, 'job_id'); }
 }

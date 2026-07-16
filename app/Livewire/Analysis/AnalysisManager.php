@@ -21,6 +21,10 @@ class AnalysisManager extends Component
     public ?Analysis $selectedAnalysis = null;
     public ?int $pendingDeletionId = null;
     public string $message = '';
+    public string $search = '';
+    public string $scoreFilter = 'all';
+    public string $resumeFilter = 'all';
+    public bool $hasSavedAnalyses = false;
 
     // Transient cover-letter draft state — never persisted until approved
     public ?string $draftCoverLetter = null;
@@ -160,8 +164,23 @@ class AnalysisManager extends Component
 
     public function render()
     {
+        $this->hasSavedAnalyses = Analysis::query()->where('user_id', auth()->id())->exists();
+
+        $analyses = Analysis::query()
+            ->where('user_id', auth()->id())
+            ->with(['resume', 'job'])
+            ->when($this->search !== '', function ($query) {
+                $term = '%' . $this->search . '%';
+                $query->where(fn ($query) => $query->whereHas('job', fn ($job) => $job->where('title', 'like', $term)->orWhere('company', 'like', $term))->orWhereHas('resume', fn ($resume) => $resume->where('title', 'like', $term)));
+            })
+            ->when($this->resumeFilter !== 'all', fn ($query) => $query->where('resume_id', $this->resumeFilter))
+            ->when($this->scoreFilter === 'strong', fn ($query) => $query->where('match_score', '>=', 70))
+            ->when($this->scoreFilter === 'potential', fn ($query) => $query->whereBetween('match_score', [45, 69]))
+            ->when($this->scoreFilter === 'needs-work', fn ($query) => $query->where('match_score', '<', 45))
+            ->latest()->get();
+
         return view('livewire.analysis.analysis-manager', [
-            'analyses' => Analysis::query()->where('user_id', auth()->id())->with(['resume', 'job'])->latest()->get(),
+            'analyses' => $analyses,
             'resumes' => Resume::query()->where('user_id', auth()->id())->latest()->get(),
         ]);
     }

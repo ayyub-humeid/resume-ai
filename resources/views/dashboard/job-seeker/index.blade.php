@@ -2,7 +2,8 @@
     description="Keep your resumes organized and prepare for the roles you want.">
     <div class="grid gap-4 sm:grid-cols-3">
         <!-- Card: Total Resumes -->
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+        <x-dashboard.stat-card label="Total Resumes" :value="$resumeCount ?? 0" />
+        {{-- <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-slate-400 text-sm font-medium">Total Resumes</p>
@@ -15,7 +16,7 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Card: Total Analyses -->
         <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
@@ -38,7 +39,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-slate-400 text-sm font-medium">Average Score</p>
-                    <p class="mt-2 text-3xl font-bold text-white">{{ $averageScore ? $averageScore . '%' : '—' }}</p>
+                    <p class="mt-2 text-3xl font-bold text-white">{{ Number::percentage($averageScore ?? 0) }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

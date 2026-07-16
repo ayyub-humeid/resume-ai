@@ -19,6 +19,9 @@ class ResumeUpload extends Component
     public $message = ''; // Success/error message
     public $page = 'index';
     public $testCounter = 0; // Connection test counter
+    public string $search = '';
+    public string $dateFilter = 'all';
+    public bool $hasUploadedResumes = false;
 
     public function incrementTest()
     {
@@ -123,6 +126,17 @@ class ResumeUpload extends Component
 
     public function render()
     {
-        return view('components.resume.⚡resume-upload');
+        $this->hasUploadedResumes = Resume::query()->where('user_id', auth()->id())->exists();
+
+        $this->resumes = Resume::query()
+            ->where('user_id', auth()->id())
+            ->when($this->search !== '', function ($query) {
+                $term = '%' . $this->search . '%';
+                $query->where(fn ($query) => $query->where('title', 'like', $term)->orWhere('file_name', 'like', $term));
+            })
+            ->when($this->dateFilter === 'week', fn ($query) => $query->where('created_at', '>=', now()->subWeek()))
+            ->when($this->dateFilter === 'month', fn ($query) => $query->where('created_at', '>=', now()->subMonth()))
+            ->latest()->get();
+        return view('livewire.resume.resume-upload');
     }
 }

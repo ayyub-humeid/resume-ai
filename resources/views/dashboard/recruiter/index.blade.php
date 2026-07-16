@@ -1,5 +1,7 @@
 <x-layouts.dashboard-layout title="Recruiter dashboard" heading="Hiring workspace"
     description="Organize applicant files, evaluate job fit, and build a high-confidence shortlist.">
+    <livewire:recruiter.recruiter-dashboard />
+    {{--
     <div class="grid gap-4 sm:grid-cols-3">
         <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <p class="text-sm text-slate-400">Active roles</p>
@@ -13,7 +15,7 @@
             <p class="text-sm text-slate-400">Shortlisted</p>
             <p class="mt-2 text-3xl font-bold text-white">0</p>
         </div>
-    </div>
+    </div>--}}
     <div class="mt-8 grid gap-4 md:grid-cols-2">
         <a href="{{ route('dashboard.recruiter.bulk-upload') }}"
             class="rounded-2xl border border-blue-400/20 bg-gradient-to-br from-blue-500/20 to-indigo-500/10 p-6 transition hover:border-blue-400/50">

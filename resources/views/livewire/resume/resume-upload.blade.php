@@ -38,11 +38,22 @@
     <!-- Resumes List Section -->
     @if ($page == 'index')
 
-        @if (count($resumes) > 0)
+        @if ($hasUploadedResumes)
             <div class="mt-12">
-                <h3 class="text-2xl font-bold text-white mb-6">Your Resumes</h3>
+                <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <h3 class="text-2xl font-bold text-white">Your Resumes</h3>
+                    <div class="flex flex-col gap-3 sm:flex-row">
+                        <input wire:model.live.debounce.300ms="search" type="search" placeholder="Search resumes"
+                            class="rounded-lg border border-slate-600 bg-slate-700/50 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-blue-500 sm:w-56">
+                        <select wire:model.live="dateFilter" class="rounded-lg border border-slate-600 bg-slate-700/50 px-3 py-2 text-sm text-white outline-none focus:border-blue-500">
+                            <option value="all">All time</option>
+                            <option value="week">Last 7 days</option>
+                            <option value="month">Last 30 days</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="grid gap-4">
-                    @foreach ($resumes as $resume)
+                    @forelse ($resumes as $resume)
                         <div
                             class="bg-slate-800/50 border border-slate-700 rounded-lg p-5 hover:border-slate-600 transition flex items-center justify-between group">
                             <div class="flex-1">
@@ -78,7 +89,13 @@
                                 </button>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="rounded-xl border border-dashed border-slate-700 bg-slate-800/30 px-6 py-10 text-center">
+                            <p class="text-sm font-medium text-slate-300">No resumes match your filters.</p>
+                            <button wire:click="$set('search', ''); $set('dateFilter', 'all')"
+                                class="mt-3 text-sm font-semibold text-blue-400 hover:text-blue-300">Clear filters</button>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         @else

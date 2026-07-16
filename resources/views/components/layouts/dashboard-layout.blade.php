@@ -44,6 +44,7 @@
             </div>
         </main>
     </div>
+    <x-general-components.toast />
     @livewireScripts
 </body>
 

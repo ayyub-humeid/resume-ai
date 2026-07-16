@@ -13,8 +13,14 @@ class ResumeAnalysisService
     /** @return array<string, mixed> */
     public function analyze(Resume $resume, string $jobDescription): array
     {
+        return $this->analyzeText($resume->raw_text, $jobDescription);
+    }
+
+    /** @return array<string, mixed> */
+    public function analyzeText(string $resumeText, string $jobDescription): array
+    {
         $response = (new ResumeAnalysisAgent)->prompt(
-            "RESUME:\n{$resume->raw_text}\n\nJOB DESCRIPTION:\n{$jobDescription}",
+            "RESUME:\n{$resumeText}\n\nJOB DESCRIPTION:\n{$jobDescription}",
             [],
             Lab::OpenRouter ,
             'openrouter/free',

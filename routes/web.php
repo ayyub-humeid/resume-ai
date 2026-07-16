@@ -33,9 +33,9 @@ Route::middleware(['auth'])->group(function () {
     ->prefix('dashboard/recruiter')
     ->as('dashboard.recruiter.')
     ->group(function () {
-        Route::get('', [RecruiterController::class, 'index'])->name('dashboard.recruiter.index');
-        Route::get('/bulk-upload', [RecruiterController::class, 'bulkUpload'])->name('dashboard.recruiter.bulk-upload');
-        Route::get('/candidates', [RecruiterController::class, 'candidates'])->name('dashboard.recruiter.candidates');
-        Route::get('/compare/{candidateIds}', [RecruiterController::class, 'compare'])->name('dashboard.recruiter.compare');
+        Route::get('', [RecruiterController::class, 'index'])->name('index');
+        Route::get('/bulk-upload', [RecruiterController::class, 'bulkUpload'])->name('bulk-upload');
+        Route::get('/candidates', [RecruiterController::class, 'candidates'])->name('candidates');
+        Route::get('/compare/{candidateIds}', [RecruiterController::class, 'compare'])->name('compare');
     });
 });
