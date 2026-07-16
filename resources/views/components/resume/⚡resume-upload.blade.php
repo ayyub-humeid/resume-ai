@@ -66,10 +66,11 @@
 
                             <!-- Action Buttons -->
                             <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition">
-                                <button type="button"
+                                {{-- <img src="{{ asset('storage/' . $user->image) }}" alt="User"> --}}
+                                <a href="{{ asset('storage/' . $resume->file_path) }}" type="button"
                                     class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-sm rounded font-medium transition">
                                     View
-                                </button>
+                                </a>
                                 <button type="button" wire:click="delete({{ $resume->id }})"
                                     wire:confirm="Delete this resume?"
                                     class="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm rounded font-medium transition">

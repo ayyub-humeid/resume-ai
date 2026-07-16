@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Resume extends Model
 {
@@ -13,4 +14,6 @@ class Resume extends Model
         'raw_text',
         'title',
     ];
+
+    public function analyses(): HasMany { return $this->hasMany(Analysis::class); }
 }

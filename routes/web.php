@@ -21,10 +21,11 @@ Route::middleware(['auth'])->group(function () {
     ->as('dashboard.job-seeker.')
     ->group(function () {
         Route::get('', [JobSeekerController::class, 'index'])->name('index');
-        Route::get('/analyze', [AnalysesController::class, 'analyze'])->name('analyze');
-        Route::get('/results/{analysisId}', [AnalysesController::class, 'results'])->name('results');
+
         Route::get('/resumes', [ResumeController::class, 'index'])->name('resumes.index');
         Route::post('/resumes', [ResumeController::class, 'store'])->name('resumes.store');
+        Route::get('/analyze', [AnalysesController::class, 'analyze'])->name('analyze');
+        Route::get('/results/{analysisId}', [AnalysesController::class, 'results'])->name('results');
     });
 
     // Recruiter Dashboard Routes

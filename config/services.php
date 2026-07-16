@@ -2,6 +2,11 @@
 
 return [
 
+    'resume_ai' => [
+        // Groq's small Llama model is fast and inexpensive; change this in .env when needed.
+        'model' => env('RESUME_AI_MODEL', 'llama-3.1-8b-instant'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

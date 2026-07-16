@@ -13,7 +13,8 @@
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.resumes.*') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">My
                 resumes</a>
             <a href="{{ route('dashboard.job-seeker.analyze') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.analyze') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">Analyze
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.analyze') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">Manage
+                &Analyze
                 a role</a>
         @else
             <a href="{{ route('dashboard.recruiter.index') }}"
