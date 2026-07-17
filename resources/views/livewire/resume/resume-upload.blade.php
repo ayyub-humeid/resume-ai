@@ -20,13 +20,12 @@
 
             <div class="mb-8 flex items-center justify-between">
                 <div>
-                    <h3 class="text-2xl font-bold text-white">Upload Resume</h3>
-                    <p class="text-slate-400 mt-2">PDF, DOC, or DOCX format (Max 5MB)</p>
+                    <h3 class="text-2xl font-bold text-white">{{ __('Upload Resume') }}</h3>
+                    <p class="text-slate-400 mt-2">{{ __('PDF, DOC, or DOCX format (Max 5MB)') }}</p>
                 </div>
                 <!-- Section Title -->
 
-                <button wire:click="changePage" class="bg-blue-600 p-3 rounded-xl cursor-pointer ">New Upload
-                    resume</button>
+                <button wire:click="changePage" class="bg-blue-600 p-3 rounded-xl cursor-pointer ">{{ __('New Upload resume') }}</button>
 
             </div>
         </div>
@@ -41,14 +40,14 @@
         @if ($hasUploadedResumes)
             <div class="mt-12">
                 <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <h3 class="text-2xl font-bold text-white">Your Resumes</h3>
-                    <div class="flex flex-col gap-3 sm:flex-row">
-                        <input wire:model.live.debounce.300ms="search" type="search" placeholder="Search resumes"
+                    <h3 class="text-2xl font-bold text-white">{{ __('Your Resumes') }}</h3>
+                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <input wire:model.live.debounce.300ms="search" type="search" placeholder="{{ __('Search resumes') }}"
                             class="rounded-lg border border-slate-600 bg-slate-700/50 px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-blue-500 sm:w-56">
                         <select wire:model.live="dateFilter" class="rounded-lg border border-slate-600 bg-slate-700/50 px-3 py-2 text-sm text-white outline-none focus:border-blue-500">
-                            <option value="all">All time</option>
-                            <option value="week">Last 7 days</option>
-                            <option value="month">Last 30 days</option>
+                            <option value="all">{{ __('All time') }}</option>
+                            <option value="week">{{ __('Last 7 days') }}</option>
+                            <option value="month">{{ __('Last 30 days') }}</option>
                         </select>
                     </div>
                 </div>
@@ -69,7 +68,7 @@
                                     <div>
                                         <h4 class="font-semibold text-white">{{ $resume->title }}</h4>
                                         <p class="text-slate-400 text-sm">{{ $resume->file_name }}</p>
-                                        <p class="text-slate-500 text-xs mt-1">Added
+                                        <p class="text-slate-500 text-xs mt-1">{{ __('Added') }}
                                             {{ $resume->created_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
@@ -80,20 +79,19 @@
                                 {{-- <img src="{{ asset('storage/' . $user->image) }}" alt="User"> --}}
                                 <a href="{{ asset('storage/' . $resume->file_path) }}" type="button"
                                     class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white text-sm rounded font-medium transition">
-                                    View
+                                    {{ __('View') }}
                                 </a>
-                                <button type="button" wire:click="delete({{ $resume->id }})"
-                                    wire:confirm="Delete this resume?"
+                                <button type="button" onclick="confirmAction('{{ __('Delete this resume? This action cannot be undone.') }}', () => @this.delete({{ $resume->id }}), '{{ __('Delete Resume') }}')"
                                     class="px-3 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm rounded font-medium transition">
-                                    Delete
+                                    {{ __('Delete') }}
                                 </button>
                             </div>
                         </div>
                     @empty
                         <div class="rounded-xl border border-dashed border-slate-700 bg-slate-800/30 px-6 py-10 text-center">
-                            <p class="text-sm font-medium text-slate-300">No resumes match your filters.</p>
+                            <p class="text-sm font-medium text-slate-300">{{ __('No resumes match your filters.') }}</p>
                             <button wire:click="$set('search', ''); $set('dateFilter', 'all')"
-                                class="mt-3 text-sm font-semibold text-blue-400 hover:text-blue-300">Clear filters</button>
+                                class="mt-3 text-sm font-semibold text-blue-400 hover:text-blue-300">{{ __('Clear filters') }}</button>
                         </div>
                     @endforelse
                 </div>
@@ -106,7 +104,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <p class="text-slate-400">No resumes uploaded yet</p>
+                <p class="text-slate-400">{{ __('No resumes uploaded yet') }}</p>
             </div>
         @endif
     @else
@@ -131,8 +129,8 @@
                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8m0 8l-4-2m4 2l4-2" />
                         </svg>
 
-                        <p class="text-lg font-semibold text-white">Drop your resume here</p>
-                        <p class="text-slate-400 text-sm mt-1">or click to browse files</p>
+                        <p class="text-lg font-semibold text-white">{{ __('Drop your resume here') }}</p>
+                        <p class="text-slate-400 text-sm mt-1">{{ __('or click to browse files') }}</p>
                     </label>
                 </div>
 
@@ -161,10 +159,10 @@
             <!-- Resume Title Input -->
             <div>
                 <label for="title" class="block text-sm font-medium text-white mb-2">
-                    Resume Title (Optional)
+                    {{ __('Resume Title (Optional)') }}
                 </label>
                 <input type="text" id="title" wire:model="title"
-                    placeholder="e.g., Senior Backend Developer - 2024"
+                    placeholder="{{ __('e.g., Senior Backend Developer - 2024') }}"
                     class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
             </div>
 
@@ -177,7 +175,7 @@
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Upload Resume
+                        {{ __('Upload Resume') }}
                     </span>
 
                     <span wire:loading class="flex items-center justify-center gap-2">
@@ -185,7 +183,7 @@
                             <circle cx="12" cy="12" r="10" stroke-width="2" opacity="0.25" />
                             <path d="M12 2a10 10 0 010 20" stroke-width="2" />
                         </svg>
-                        Uploading...
+                        {{ __('Uploading...') }}
                     </span>
                 </button>
             </div>

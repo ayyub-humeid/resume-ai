@@ -11,6 +11,14 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Language switch route
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 // Authenticated routes with role-based middleware
 Route::middleware(['auth'])->group(function () {
 
@@ -36,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('', [RecruiterController::class, 'index'])->name('index');
         Route::get('/bulk-upload', [RecruiterController::class, 'bulkUpload'])->name('bulk-upload');
         Route::get('/candidates', [RecruiterController::class, 'candidates'])->name('candidates');
+        Route::get('/jobs', [RecruiterController::class, 'jobs'])->name('jobs');
         Route::get('/compare/{candidateIds}', [RecruiterController::class, 'compare'])->name('compare');
     });
 });

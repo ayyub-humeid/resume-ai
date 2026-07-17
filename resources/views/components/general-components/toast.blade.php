@@ -1,6 +1,6 @@
 <!-- Toast Container -->
 <div id="toast-container"
-    class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-3 max-w-sm w-full px-4 sm:px-0 pointer-events-none">
+    class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 max-w-sm w-full px-4 sm:px-0 pointer-events-none">
     <!-- Dynamic toasts will render here -->
 </div>
 
@@ -10,7 +10,7 @@
      * @param {string} message The message to display.
      * @param {string} type The toast type: 'success', 'error', 'info', 'warning'.
      */
-    window.showToast = function(message, type = 'success') {
+    window.showToast = function (message, type = 'success') {
         const container = document.getElementById('toast-container');
         if (!container) return;
 
@@ -57,7 +57,7 @@
         // Slide in
         setTimeout(() => {
             toast.classList.remove('translate-x-full', 'opacity-0');
-        }, 10);
+        }, 120);
 
         // Animate the progress bar shrinking
         const progressBar = toast.querySelector('.absolute.bottom-0');
@@ -68,7 +68,7 @@
         // Self-dismiss timer (4 seconds)
         const autoDismissTimer = setTimeout(() => {
             dismissToast(toast);
-        }, 4000);
+        }, 40000);
 
         // Store timer to prevent memory leak/errors on manual close
         toast.dataset.timerId = autoDismissTimer;
@@ -78,7 +78,7 @@
      * Dismiss a specific toast notification with animation.
      * @param {HTMLElement} toastElement
      */
-    window.dismissToast = function(toastElement) {
+    window.dismissToast = function (toastElement) {
         if (!toastElement) return;
 
         // Clear active timer if dismissed early manually
@@ -93,7 +93,7 @@
             toastElement.remove();
         }, 300);
     }
-    
+
     // Livewire listener for toasts
     document.addEventListener('livewire:initialized', () => {
         Livewire.on('toast', (data) => {

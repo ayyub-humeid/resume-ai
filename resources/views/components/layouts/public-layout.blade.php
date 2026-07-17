@@ -1,6 +1,6 @@
 @props(['title' => 'Resume AI'])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen bg-slate-950 font-sans text-slate-200 antialiased">
+<body class="min-h-screen bg-slate-950 font-sans text-slate-200 antialiased {{ app()->getLocale() === 'ar' ? 'font-arabic' : '' }}">
     <div class="fixed inset-0 -z-10 overflow-hidden">
         <div class="absolute -left-48 -top-40 h-[34rem] w-[34rem] rounded-full bg-blue-600/15 blur-[130px]"></div>
         <div class="absolute -right-48 top-72 h-[30rem] w-[30rem] rounded-full bg-indigo-600/10 blur-[130px]"></div>
@@ -21,18 +21,19 @@
                 Resume AI
             </a>
             <div class="flex items-center gap-3">
+                <x-general-components.language-switcher />
                 @auth
-                    <a href="{{ auth()->user()->getDashboardUrl() }}" class="hidden text-sm font-medium text-slate-300 hover:text-white sm:block">Hi, {{ auth()->user()->name }}</a>
-                    <a href="{{ auth()->user()->getDashboardUrl() }}" class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-400">Open dashboard</a>
+                    <a href="{{ auth()->user()->getDashboardUrl() }}" class="hidden text-sm font-medium text-slate-300 hover:text-white sm:block">{{ __('Hi, :name', ['name' => auth()->user()->name]) }}</a>
+                    <a href="{{ auth()->user()->getDashboardUrl() }}" class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-400">{{ __('Open dashboard') }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="px-3 py-2 text-sm font-semibold text-slate-300 transition hover:text-white">Sign in</a>
-                    <a href="{{ route('register') }}" class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-400">Get started</a>
+                    <a href="{{ route('login') }}" class="px-3 py-2 text-sm font-semibold text-slate-300 transition hover:text-white">{{ __('Sign in') }}</a>
+                    <a href="{{ route('register') }}" class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-400">{{ __('Get started') }}</a>
                 @endauth
             </div>
         </div>
     </header>
     {{ $slot }}
-    <footer class="border-t border-white/5 py-8 text-center text-sm text-slate-500">© {{ date('Y') }} Resume AI. Better matches, clearer decisions.</footer>
+    <footer class="border-t border-white/5 py-8 text-center text-sm text-slate-500">© {{ date('Y') }} Resume AI. {{ __('Better matches, clearer decisions.') }}</footer>
     @livewireScripts
 </body>
 </html>

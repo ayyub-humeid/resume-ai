@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         'job_seeker' => EnsureUserIsJobSeeker::class,
         'recruiter' => EnsureUserIsRecruiter::class,
     ]);
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
