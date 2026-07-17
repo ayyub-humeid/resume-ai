@@ -1,6 +1,7 @@
 @props(['pageTitle' => 'Resume AI', 'pageDescription' => 'Resume Ai', 'pageHeading' => ''])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
+    class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -23,7 +24,9 @@
     <!-- Custom CSS Base Enhancements -->
     <style>
         body {
-            font-family: {{ app()->getLocale() === 'ar' ? "'Cairo', sans-serif" : "'Plus Jakarta Sans', sans-serif" }};
+            font-family:
+                {{ app()->getLocale() === 'ar' ? "'Cairo', sans-serif" : "'Plus Jakarta Sans', sans-serif" }}
+            ;
             background-color: #080C14;
             color: #E2E8F0;
         }
@@ -50,7 +53,8 @@
 
 </head>
 
-<body class="min-h-full flex flex-col antialiased bg-[#080C14] text-slate-200 {{ app()->getLocale() === 'ar' ? 'font-arabic' : '' }}">
+<body
+    class="min-h-full flex flex-col antialiased bg-[#080C14] text-slate-200 {{ app()->getLocale() === 'ar' ? 'font-arabic' : '' }}">
 
     <!-- Ambient glowing backgrounds to feel premium, custom-designed, not standard template -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">

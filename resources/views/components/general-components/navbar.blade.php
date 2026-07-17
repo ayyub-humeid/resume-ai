@@ -12,11 +12,11 @@
             </div>
 
             <!-- Nav Links -->
-            <div class="hidden md:flex items-center gap-8">
+            <!-- <div class="hidden md:flex items-center gap-8">
                 <a href="#" class="text-slate-300 hover:text-white transition text-sm font-medium">{{ __('Dashboard') }}</a>
                 <a href="#" class="text-slate-300 hover:text-white transition text-sm font-medium">{{ __('Analyze') }}</a>
                 <a href="#" class="text-slate-300 hover:text-white transition text-sm font-medium">{{ __('Recruiter') }}</a>
-            </div>
+            </div> -->
 
             <!-- User Profile (placeholder) -->
             <div class="flex items-center gap-4">
