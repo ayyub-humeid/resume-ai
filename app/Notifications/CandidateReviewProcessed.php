@@ -14,11 +14,7 @@ class CandidateReviewProcessed extends Notification implements ShouldQueue
 
     public function __construct(
         public int $recruiterId,
-        public int $candidateId,
-        public string $candidateName,
-        public string $status, // 'completed' | 'failed'
-        public ?int $matchScore = null,
-        public ?string $jobTitle = null,
+        public int $processedCount
     ) {}
 
     public function via($notifiable): array
@@ -29,26 +25,13 @@ class CandidateReviewProcessed extends Notification implements ShouldQueue
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return (new BroadcastMessage([
-            'candidate_id' => $this->candidateId,
-            'candidate_name' => $this->candidateName,
-            'job_title' => $this->jobTitle,
-            'status' => $this->status,
-            'match_score' => $this->matchScore,
-            'message' => $this->status === 'completed'
-                ? "{$this->candidateName}'s review is complete."
-                : "{$this->candidateName}'s review failed.",
-        ]))->onQueue('notifications');
+            'message' => "Finished ranking {$this->processedCount} candidate(s).",
+            'type' => 'success'
+        ]));
     }
 
-    // Custom event name on the frontend (Echo .listen('.candidate.review.processed', ...))
-    public function broadcastType(): string
-    {
-        return 'candidate.review.processed';
-    }
-
-    // Custom channel instead of the default App.Models.User.{id}
     public function broadcastOn(): array
     {
-        return [new PrivateChannel('recruiter.' . $this->recruiterId)];
+        return [new PrivateChannel('recruiter.notifications.' . $this->recruiterId)];
     }
 }

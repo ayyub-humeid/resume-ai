@@ -2,7 +2,6 @@
     description="Keep your resumes organized and prepare for the roles you want.">
     <div class="grid gap-4 sm:grid-cols-3">
         <!-- Card: Total Resumes -->
-        <x-dashboard.stat-card label="Total Resumes" :value="$resumeCount ?? 0" />
         {{-- <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
             <div class="flex items-center justify-between">
                 <div>
@@ -63,8 +62,8 @@
                         <h4 class="text-lg font-bold mb-2">Manage Resumes</h4>
                         <p class="text-blue-100 text-sm">Add a new resume for analysis</p>
                     </div>
-                    <svg class="w-8 h-8 opacity-50 group-hover:opacity-100 transition" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 opacity-50 group-hover:opacity-100 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
                 </div>
@@ -78,8 +77,8 @@
                         <h4 class="text-lg font-bold mb-2">Analyze Resume</h4>
                         <p class="text-purple-100 text-sm">Get AI-powered insights</p>
                     </div>
-                    <svg class="w-8 h-8 opacity-50 group-hover:opacity-100 transition" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-8 h-8 opacity-50 group-hover:opacity-100 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>

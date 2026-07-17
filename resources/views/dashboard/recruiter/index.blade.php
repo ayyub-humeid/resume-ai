@@ -1,6 +1,7 @@
 <x-layouts.dashboard-layout title="Recruiter dashboard" heading="Hiring workspace"
     description="Organize applicant files, evaluate job fit, and build a high-confidence shortlist.">
     <livewire:recruiter.recruiter-dashboard />
+
     {{--
     <div class="grid gap-4 sm:grid-cols-3">
         <div class="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">

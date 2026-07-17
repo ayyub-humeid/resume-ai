@@ -4,7 +4,6 @@
         <x-dashboard.stat-card label="Candidates reviewed" :value="$candidateCount" tone="indigo" />
         <x-dashboard.stat-card label="Shortlisted" :value="$shortlistedCount" tone="emerald" />
     </div>
-
     <div
         class="flex flex-col justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 sm:flex-row sm:items-center">
         <div>

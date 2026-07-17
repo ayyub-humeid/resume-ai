@@ -13,7 +13,8 @@
     <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Stylesheets & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -26,22 +27,27 @@
             background-color: #080C14;
             color: #E2E8F0;
         }
+
         /* Custom scrollbar to keep it sleek */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: #0B0F19;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #1E293B;
             border-radius: 3px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #334155;
         }
     </style>
+
 </head>
 
 <body class="min-h-full flex flex-col antialiased bg-[#080C14] text-slate-200">
@@ -83,6 +89,7 @@
     </main>
 
     <!-- Footer -->
+    <script src="{{ asset('js/engamentFunctions.js') }}"></script>
     <x-general-components.footer />
 
     @livewireScripts

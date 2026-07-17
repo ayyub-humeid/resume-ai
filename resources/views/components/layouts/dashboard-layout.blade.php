@@ -11,11 +11,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} · Resume AI</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        const USER_ID = {{ Auth::id() ?? 'null' }};
+    </script>
+    @vite(['resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     @livewireStyles
+    <!-- Material Symbols for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body class="min-h-screen bg-slate-950 text-slate-200 antialiased">
+   
     <div class="min-h-screen lg:grid lg:grid-cols-[260px_1fr]">
         <x-layouts.sidebar-component />
         <main class="min-w-0">
@@ -44,6 +51,7 @@
             </div>
         </main>
     </div>
+     <!-- Modern Tailwind Confirmation Modal -->
     <x-general-components.toast />
     @livewireScripts
 </body>

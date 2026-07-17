@@ -28,10 +28,15 @@
     </div>
     <div class="flex flex-wrap items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/50 p-4">
         <button wire:click="reviewSelected" wire:loading.attr="disabled" wire:target="reviewSelected"
-            class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">Review selected</button>
+            class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed">
+            <span wire:loading.remove wire:target="reviewSelected">Review selected</span>
+            <span wire:loading wire:target="reviewSelected">Reviewing...</span>
+        </button>
         <button wire:click="reviewAll" wire:loading.attr="disabled" wire:target="reviewAll"
-            class="rounded-lg border border-indigo-400/40 px-4 py-2 text-sm font-semibold text-indigo-200">Review all
-            candidates in selected role</button>
+            class="rounded-lg border border-indigo-400/40 px-4 py-2 text-sm font-semibold text-indigo-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            <span wire:loading.remove wire:target="reviewAll">Review all candidates in selected role</span>
+            <span wire:loading wire:target="reviewAll">Reviewing...</span>
+        </button>
         <span class="text-sm text-slate-400">{{ count($selectedCandidates) }}
             selected</span>
     </div>

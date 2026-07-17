@@ -17,9 +17,18 @@ class CandidateManager extends Component
     public string $jobFilter = 'all';
     public array $selectedCandidates = [];
 
-    public function updatedSearch(): void { $this->resetPage(); }
-    public function updatedStatus(): void { $this->resetPage(); }
-    public function updatedJobFilter(): void { $this->resetPage(); }
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedStatus(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedJobFilter(): void
+    {
+        $this->resetPage();
+    }
 
     public function updateStatus(int $candidateId, string $status): void
     {
@@ -30,10 +39,10 @@ class CandidateManager extends Component
 
     public function reviewSelected(): void
     {
-         if ($this->jobFilter === 'all') {
-        $this->addError('selection', 'Choose a role before reviewing all of its candidates.');
-        return;
-    }
+        if ($this->jobFilter === 'all') {
+            $this->addError('selection', 'Choose a role before reviewing all of its candidates.');
+            return;
+        }
 
         if (empty($this->selectedCandidates)) {
             $this->addError('selection', 'Select at least one candidate to review.');
@@ -51,29 +60,33 @@ class CandidateManager extends Component
         }
 
         $ids = Candidate::query()->where('recruiter_id', auth()->id())->where('job_id', $this->jobFilter)->
-        whereNotIn('status', ['completed', 'rejected','reviewing'])
-        ->pluck('id')->all();
+            whereNotIn('status', ['completed', 'rejected', 'reviewing'])
+            ->pluck('id')->all();
         $this->queueReviews($ids);
     }
 
     private function queueReviews(array $ids): void
     {
-
         $candidates = Candidate::query()->where('recruiter_id', auth()->id())->whereIn('id', $ids)->with('job')->get();
 
-        $queued = 0;
+        $validCandidateIds = [];
         foreach ($candidates as $candidate) {
-            if (! $candidate->job || blank($candidate->raw_text)) {
+            if (!$candidate->job || blank($candidate->raw_text)) {
                 continue;
             }
-
+            $validCandidateIds[] = $candidate->id;
             $candidate->update(['review_state' => 'queued']);
-            AnalyzeCandidate::dispatch($candidate->id, auth()->id());
-            $queued++;
+        }
+
+        if (count($validCandidateIds) > 0) {
+            AnalyzeCandidate::dispatch($validCandidateIds, auth()->id());
         }
 
         $this->selectedCandidates = [];
-        $this->dispatch('toast', message: "{$queued} candidate review(s) queued.");
+        $this->dispatch('toast', [
+            'message' => count($validCandidateIds) . " candidate review(s) queued. \n we will notify you when the operation finished",
+            'type' => 'info'
+        ]);
     }
 
     public function render()
@@ -81,9 +94,9 @@ class CandidateManager extends Component
         $candidates = Candidate::query()
             ->where('recruiter_id', auth()->id())
             ->with('job')
-            ->when($this->search !== '', fn ($query) => $query->where(fn ($query) => $query->where('name', 'like', "%{$this->search}%")->orWhere('email', 'like', "%{$this->search}%")))
-            ->when($this->status !== 'all', fn ($query) => $query->where('status', $this->status))
-            ->when($this->jobFilter !== 'all', fn ($query) => $query->where('job_id', $this->jobFilter))
+            ->when($this->search !== '', fn($query) => $query->where(fn($query) => $query->where('name', 'like', "%{$this->search}%")->orWhere('email', 'like', "%{$this->search}%")))
+            ->when($this->status !== 'all', fn($query) => $query->where('status', $this->status))
+            ->when($this->jobFilter !== 'all', fn($query) => $query->where('job_id', $this->jobFilter))
             ->orderByDesc('match_score')->latest()
             ->paginate(10);
 

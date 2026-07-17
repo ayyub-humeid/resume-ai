@@ -17,24 +17,44 @@ class AnalyzeCandidate implements ShouldQueue
 
     public int $timeout = 180;
 
-    public function __construct(public int $candidateId, public int $recruiterId) {}
+    public function __construct(public array $candidateIds, public int $recruiterId)
+    {
+    }
 
     public function handle(ResumeAnalysisService $service): void
     {
-        $candidate = Candidate::query()->where('id', $this->candidateId)->where('recruiter_id', $this->recruiterId)->with('job')->first();
+        $candidates = Candidate::query()
+            ->whereIn('id', $this->candidateIds)
+            ->where('recruiter_id', $this->recruiterId)
+            ->with('job')
+            ->get();
 
-        if (! $candidate || ! $candidate->job || blank($candidate->raw_text)) {
-            return;
+        $processedCount = 0;
+
+        foreach ($candidates as $candidate) {
+            if (!$candidate->job || blank($candidate->raw_text)) {
+                continue;
+            }
+
+            try {
+                $result = $service->analyzeText($candidate->raw_text, $candidate->job->description);
+                $candidate->update([
+                    'match_score' => $result['match_score'],
+                    'review_data' => $result,
+                    'review_state' => 'complete'
+                ]);
+                $processedCount++;
+            } catch (Throwable $exception) {
+                report($exception);
+                $candidate->update(['review_state' => 'failed']);
+                // Continue with next candidate instead of failing entire job
+            }
         }
 
-        try {
-            $result = $service->analyzeText($candidate->raw_text, $candidate->job->description);
-            $candidate->update(['match_score' => $result['match_score'], 'review_data' => $result, 'review_state' => 'complete']);
-
-        } catch (Throwable $exception) {
-            report($exception);
-            $candidate->update(['review_state' => 'failed']);
-            throw $exception;
+        // Notify the recruiter that the batch job is complete
+        $user = \App\Models\User::find($this->recruiterId);
+        if ($user) {
+            $user->notify(new \App\Notifications\CandidateReviewProcessed($this->recruiterId, $processedCount));
         }
     }
 }
