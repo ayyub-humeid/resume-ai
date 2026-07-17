@@ -56,4 +56,10 @@ class RecruiterController extends Controller implements HasMiddleware
             'candidateIds' => $candidateIds,
         ]);
     }
+
+    // Show Job Management
+    public function jobs()
+    {
+        return view('dashboard.recruiter.jobs');
+    }
 }

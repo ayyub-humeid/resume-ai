@@ -15,17 +15,31 @@ class CandidateReviewProcessed extends Notification implements ShouldQueue
     public function __construct(
         public int $recruiterId,
         public int $processedCount
-    ) {}
+    ) {
+    }
 
     public function via($notifiable): array
     {
-        return ['broadcast'];
+        return ['database', 'broadcast'];
+    }
+
+    public function toArray($notifiable): array
+    {
+        return [
+            'title' => 'Candidate Ranking Finished',
+            'body' => "We have successfully finished analyzing and ranking {$this->processedCount} candidate(s).",
+            'link' => route('dashboard.recruiter.candidates'),
+            'type' => 'success'
+        ];
     }
 
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return (new BroadcastMessage([
-            'message' => "Finished ranking {$this->processedCount} candidate(s).",
+            'title' => 'Candidate Ranking Finished',
+            'body' => "We have successfully finished analyzing and ranking {$this->processedCount} candidate(s).",
+            'link' => route('dashboard.recruiter.candidates'),
+            'message' => "Ranking finished! {$this->processedCount} candidate(s) were successfully analyzed.",
             'type' => 'success'
         ]));
     }

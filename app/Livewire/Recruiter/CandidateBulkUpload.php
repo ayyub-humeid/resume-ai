@@ -19,6 +19,11 @@ class CandidateBulkUpload extends Component
     public array $files = [];
     public string $message = '';
 
+    public function mount(): void
+    {
+        $this->existingJobId = request()->query('job_id', '');
+    }
+
     public function submit(ResumeParserService $parser): void
     {
         $validated = $this->validate([
@@ -59,7 +64,7 @@ class CandidateBulkUpload extends Component
                     'name' => $name,
                     'file_name' => $file->getClientOriginalName(),
                     'file_path' => $path,
-                    'raw_text' => $parser->parse(storage_path('app/public/'.$path)),
+                    'raw_text' => $parser->parse(storage_path('app/public/' . $path)),
                 ]);
                 $uploaded++;
             } catch (\Throwable $exception) {
@@ -69,13 +74,13 @@ class CandidateBulkUpload extends Component
         }
 
         $this->reset(['jobTitle', 'company', 'jobDescription', 'files']);
-        $this->message = "{$uploaded} candidate(s) added.".($failed ? " {$failed} file(s) failed and can be uploaded again." : '');
+        $this->message = "{$uploaded} candidate(s) added." . ($failed ? " {$failed} file(s) failed and can be uploaded again." : '');
     }
 
     public function render()
     {
         return view('livewire.recruiter.candidate-bulk-upload', [
-            'jobs' => JobListing::query()->where('user_id', auth()->id())->where('status', 'active')->latest()->get(['id', 'title']),
+            'jobs' => JobListing::query()->where('user_id', auth()->id())->where('status', 'open')->latest()->get(['id', 'title']),
         ]);
     }
 }
