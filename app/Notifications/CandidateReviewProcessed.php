@@ -3,14 +3,15 @@
 namespace App\Notifications;
 
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+// use Illuminate\Bus\Queueable;
+// use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class CandidateReviewProcessed extends Notification implements ShouldQueue
+class CandidateReviewProcessed extends Notification
+// implements ShouldQueue
 {
-    use Queueable;
+    // use Queueable;
 
     public function __construct(
         public int $recruiterId,
