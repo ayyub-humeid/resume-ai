@@ -278,5 +278,16 @@
     "Confirm new password": "تأكيد كلمة المرور الجديدة",
     "Reset password": "إعادة تعيين كلمة المرور",
     "Dashboard": "لوحة القيادة",
-    "Analyze": "تحليل"
+    "Analyze": "تحليل",
+    "Candidate status updated successfully.": "تم تحديث حالة المرشح بنجاح.",
+    "Choose a role before reviewing all of its candidates.": "اختر دوراً وظيفياً أولاً قبل مراجعة كافة المرشحين لها.",
+    "Select at least one candidate to review.": "اختر مرشحاً واحداً على الأقل للمراجعة.",
+    "No candidates found to review for this role.": "لم يتم العثور على مرشحين للمراجعة في هذه الوظيفة.",
+    "No valid candidates found to review.": "لم يتم العثور على مرشحين صالحين للمراجعة.",
+    ":count candidate review(s) processed successfully.": "تمت معالجة مراجعة :count من المرشحين بنجاح.",
+    "Candidate Ranking Finished": "اكتمل تصنيف المرشحين",
+    "We have successfully finished analyzing and ranking :count candidate(s).": "تم الانتهاء بنجاح من تحليل وتصنيف :count من المرشحين.",
+    "Ranking finished! :count candidate(s) were successfully analyzed.": "انتهى التصنيف! تم تحليل :count من المرشحين بنجاح.",
+    "We Will notify you when we the operation finished.": "سنخبرك عندما تنتهي العملية.هذه العملية تاخد بعض الوقت , يرجى عدم اغلاق الصفحة",
+    "(:count candidate(s) added.": "تم عملية رفع المرشحين بنجاح."
 }

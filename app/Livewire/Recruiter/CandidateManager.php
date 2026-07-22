@@ -35,17 +35,24 @@ class CandidateManager extends Component
         abort_unless(in_array($status, ['new', 'reviewing', 'shortlisted', 'rejected'], true), 422);
 
         Candidate::query()->where('recruiter_id', auth()->id())->findOrFail($candidateId)->update(['status' => $status]);
+
+        $this->dispatch('toast', [
+            'message' => __('Candidate status updated successfully.'),
+            'type' => 'success'
+        ]);
     }
 
     public function reviewSelected(): void
     {
+        $this->resetErrorBag();
+
         if ($this->jobFilter === 'all') {
-            $this->addError('selection', 'Choose a role before reviewing all of its candidates.');
+            $this->addError('selection', __('Choose a role before reviewing all of its candidates.'));
             return;
         }
 
         if (empty($this->selectedCandidates)) {
-            $this->addError('selection', 'Select at least one candidate to review.');
+            $this->addError('selection', __('Select at least one candidate to review.'));
             return;
         }
 
@@ -54,19 +61,33 @@ class CandidateManager extends Component
 
     public function reviewAll(): void
     {
+        $this->resetErrorBag();
+
         if ($this->jobFilter === 'all') {
-            $this->addError('selection', 'Choose a role before reviewing all of its candidates.');
+            $this->addError('selection', __('Choose a role before reviewing all of its candidates.'));
             return;
         }
 
         $ids = Candidate::query()->where('recruiter_id', auth()->id())->where('job_id', $this->jobFilter)->
             whereNotIn('status', ['completed', 'rejected', 'reviewing'])
             ->pluck('id')->all();
+
+        if (empty($ids)) {
+            $this->addError('selection', __('No candidates found to review for this role.'));
+            return;
+        }
+
         $this->queueReviews($ids);
     }
 
     private function queueReviews(array $ids): void
     {
+        // Extend time limit for unqueued job execution on shared hosting
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(300);
+        }
+        @ini_set('max_execution_time', '300');
+
         $candidates = Candidate::query()->where('recruiter_id', auth()->id())->whereIn('id', $ids)->with('job')->get();
 
         $validCandidateIds = [];
@@ -79,14 +100,16 @@ class CandidateManager extends Component
         }
 
         if (count($validCandidateIds) > 0) {
-            AnalyzeCandidate::dispatch($validCandidateIds, auth()->id());
-        }
+            AnalyzeCandidate::dispatchSync($validCandidateIds, auth()->id());
 
-        $this->selectedCandidates = [];
-        $this->dispatch('toast', [
-            'message' => count($validCandidateIds) . " candidate review(s) queued. \n we will notify you when the operation finished",
-            'type' => 'info'
-        ]);
+            $this->selectedCandidates = [];
+            $this->dispatch('toast', [
+                'message' => __(':count candidate review(s) processed successfully.', ['count' => count($validCandidateIds)]),
+                'type' => 'success'
+            ]);
+        } else {
+            $this->addError('selection', __('No valid candidates found to review.'));
+        }
     }
 
     public function render()

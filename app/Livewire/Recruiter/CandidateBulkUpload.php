@@ -74,7 +74,7 @@ class CandidateBulkUpload extends Component
         }
 
         $this->reset(['jobTitle', 'company', 'jobDescription', 'files']);
-        $this->message = "{$uploaded} candidate(s) added." . ($failed ? " {$failed} file(s) failed and can be uploaded again." : '');
+        $this->message = __('(:count candidate(s) added.', ['count' => $uploaded]);
     }
 
     public function render()

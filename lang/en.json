@@ -4,5 +4,16 @@
     "Jobs": "Jobs",
     "Profile": "Profile",
     "Settings": "Settings",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Candidate status updated successfully.": "Candidate status updated successfully.",
+    "Choose a role before reviewing all of its candidates.": "Choose a role before reviewing all of its candidates.",
+    "Select at least one candidate to review.": "Select at least one candidate to review.",
+    "No candidates found to review for this role.": "No candidates found to review for this role.",
+    "No valid candidates found to review.": "No valid candidates found to review.",
+    ":count candidate review(s) processed successfully.": ":count candidate review(s) processed successfully.",
+    "Candidate Ranking Finished": "Candidate Ranking Finished",
+    "We have successfully finished analyzing and ranking :count candidate(s).": "We have successfully finished analyzing and ranking :count candidate(s).",
+    "Ranking finished! :count candidate(s) were successfully analyzed.": "Ranking finished! :count candidate(s) were successfully analyzed.",
+    "We Will notify you when we the operation finished.": "We Will notify you when we the operation finished.This operation takes some time, please do not close the page.",
+    "(:count candidate(s) added.": "(:count candidate(s) added."
 }

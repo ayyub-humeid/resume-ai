@@ -27,8 +27,8 @@ class CandidateReviewProcessed extends Notification
     public function toArray($notifiable): array
     {
         return [
-            'title' => 'Candidate Ranking Finished',
-            'body' => "We have successfully finished analyzing and ranking {$this->processedCount} candidate(s).",
+            'title' => __('Candidate Ranking Finished'),
+            'body' => __('We have successfully finished analyzing and ranking :count candidate(s).', ['count' => $this->processedCount]),
             'link' => route('dashboard.recruiter.candidates'),
             'type' => 'success'
         ];
@@ -37,10 +37,10 @@ class CandidateReviewProcessed extends Notification
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return (new BroadcastMessage([
-            'title' => 'Candidate Ranking Finished',
-            'body' => "We have successfully finished analyzing and ranking {$this->processedCount} candidate(s).",
+            'title' => __('Candidate Ranking Finished'),
+            'body' => __('We have successfully finished analyzing and ranking :count candidate(s).', ['count' => $this->processedCount]),
             'link' => route('dashboard.recruiter.candidates'),
-            'message' => "Ranking finished! {$this->processedCount} candidate(s) were successfully analyzed.",
+            'message' => __('Ranking finished! :count candidate(s) were successfully analyzed.', ['count' => $this->processedCount]),
             'type' => 'success'
         ]));
     }

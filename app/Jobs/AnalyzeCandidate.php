@@ -11,9 +11,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 
-class AnalyzeCandidate implements ShouldQueue
+class AnalyzeCandidate
+// implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    // , InteractsWithQueue, Queueable, SerializesModels
 
     public int $timeout = 180;
 
@@ -23,6 +25,12 @@ class AnalyzeCandidate implements ShouldQueue
 
     public function handle(ResumeAnalysisService $service): void
     {
+        // Extend time limit for unqueued / synchronous execution on shared hosting
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(300);
+        }
+        @ini_set('max_execution_time', '300');
+
         $candidates = Candidate::query()
             ->whereIn('id', $this->candidateIds)
             ->where('recruiter_id', $this->recruiterId)
@@ -32,6 +40,11 @@ class AnalyzeCandidate implements ShouldQueue
         $processedCount = 0;
 
         foreach ($candidates as $candidate) {
+            // Reset execution timer per candidate to prevent 30s timeout exception
+            if (function_exists('set_time_limit')) {
+                @set_time_limit(60);
+            }
+
             if (!$candidate->job || blank($candidate->raw_text)) {
                 continue;
             }
@@ -49,12 +62,15 @@ class AnalyzeCandidate implements ShouldQueue
                 $candidate->update(['review_state' => 'failed']);
                 // Continue with next candidate instead of failing entire job
             }
+
+            // Micro pause (0.25 sec) to keep server CPU smooth and prevent API rate limits
+            usleep(250000);
         }
 
         // Notify the recruiter that the batch job is complete
         $user = \App\Models\User::find($this->recruiterId);
         if ($user) {
-            $user->notify(new \App\Notifications\CandidateReviewProcessed($this->recruiterId, $processedCount));
+            $user->notifyNow(new \App\Notifications\CandidateReviewProcessed($this->recruiterId, $processedCount));
         }
     }
 }
