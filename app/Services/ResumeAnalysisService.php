@@ -19,12 +19,17 @@ class ResumeAnalysisService
     /** @return array<string, mixed> */
     public function analyzeText(string $resumeText, string $jobDescription): array
     {
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(180);
+        }
+        @ini_set('max_execution_time', '180');
+
         $response = (new ResumeAnalysisAgent)->prompt(
             "RESUME:\n{$resumeText}\n\nJOB DESCRIPTION:\n{$jobDescription}",
             [],
-            Lab::OpenRouter ,
+            Lab::OpenRouter,
             'openrouter/free',
-            60,
+            120,
         );
 
         $decoded = json_decode(trim($response->text), true);

@@ -8,14 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserIsRecruiter
 {
-    // Check if user has recruiter role, if not redirect to their dashboard
+    // Check if user has recruiter or admin role, if not redirect to their dashboard
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->isRecruiter()) {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (auth()->user()->isRecruiter() || auth()->user()->isAdmin()) {
             return $next($request);
         }
 
-        // Redirect to their appropriate dashboard
         return redirect(auth()->user()->getDashboardUrl());
     }
 }

@@ -12,14 +12,7 @@
     <p class="mt-3 text-xs font-semibold uppercase tracking-[.18em] text-slate-500">
         {{ auth()->user()->isRecruiter() ? __('Recruiter workspace') : __('Candidate workspace') }}</p>
     <nav class="mt-8 space-y-1">
-        @if (auth()->user()->isJobSeeker())
-            <a href="{{ route('dashboard.job-seeker.index') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.index') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Overview') }}</a>
-            <a href="{{ route('dashboard.job-seeker.resumes.index') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.resumes.*') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('My resumes') }}</a>
-            <a href="{{ route('dashboard.job-seeker.analyze') }}"
-                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.analyze') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Manage & Analyze a role') }}</a>
-        @else
+        @if (auth()->user()->isRecruiter())
             <a href="{{ route('dashboard.recruiter.index') }}"
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.recruiter.index') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Overview') }}</a>
             <a href="{{ route('dashboard.recruiter.jobs') }}"
@@ -28,6 +21,13 @@
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.recruiter.bulk-upload') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Bulk upload') }}</a>
             <a href="{{ route('dashboard.recruiter.candidates') }}"
                 class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.recruiter.candidates') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Candidates') }}</a>
+        @else
+            <a href="{{ route('dashboard.job-seeker.index') }}"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.index') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Overview') }}</a>
+            <a href="{{ route('dashboard.job-seeker.resumes.index') }}"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.resumes.*') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('My resumes') }}</a>
+            <a href="{{ route('dashboard.job-seeker.analyze') }}"
+                class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->routeIs('dashboard.job-seeker.analyze') ? 'bg-blue-500/15 text-blue-300' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">{{ __('Manage & Analyze a role') }}</a>
         @endif
     </nav>
     <div class="mt-auto border-t border-slate-800 pt-4">

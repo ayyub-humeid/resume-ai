@@ -12,6 +12,11 @@ class CoverLetterGeneratorService
 {
     public function generate(Analysis $analysis): string
     {
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(180);
+        }
+        @ini_set('max_execution_time', '180');
+
         $resume = $analysis->resume;
         $job = $analysis->job;
 
@@ -20,7 +25,7 @@ class CoverLetterGeneratorService
             [],
             Lab::OpenRouter,
             'openrouter/free',
-            60,
+            120,
         );
 
         $decoded = json_decode(trim($response->text), true);

@@ -8,14 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserIsJobSeeker
 {
-    // Check if user has job_seeker role, if not redirect to their dashboard
+    // Check if user has job_seeker or admin role, if not redirect to their dashboard
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->isJobSeeker()) {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (auth()->user()->isJobSeeker() || auth()->user()->isAdmin()) {
             return $next($request);
         }
 
-        // Redirect to their appropriate dashboard
         return redirect(auth()->user()->getDashboardUrl());
     }
 }

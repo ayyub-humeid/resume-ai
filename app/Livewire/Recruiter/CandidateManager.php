@@ -82,6 +82,10 @@ class CandidateManager extends Component
 
     private function queueReviews(array $ids): void
     {
+        //  $this->dispatch('toast', [
+        //         'message' => __('We Will notify you when we the operation finished.'),
+        //         'type' => 'success'
+        //     ]);
         // Extend time limit for unqueued job execution on shared hosting
         if (function_exists('set_time_limit')) {
             @set_time_limit(300);

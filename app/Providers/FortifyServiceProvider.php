@@ -38,17 +38,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
-         Fortify::redirects('login', function () {
-        return auth()->user()->getDashboardUrl();
-    });
 
-     // Redirect to dashboard based on role after successful login
-    Fortify::redirects('login', function () {
-        return auth()->user()->getDashboardUrl();
-    });
+        // Redirect to dashboard based on role after successful login
+        Fortify::redirects('login', function () {
+            return auth()->user()->getDashboardUrl();
+        });
 
-    // Redirect to home after logout
-    Fortify::redirects('logout', '/');
+        // Redirect to home after logout
+        Fortify::redirects('logout', '/');
         Fortify::registerView(function () {
             return view('auth.register');
         });

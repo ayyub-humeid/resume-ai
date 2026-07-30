@@ -49,8 +49,10 @@ class User extends Authenticatable
     // Get dashboard URL based on role
     public function getDashboardUrl(): string
     {
-        return $this->isRecruiter()
-            ? '/dashboard/recruiter'
-            : '/dashboard/job-seeker';
+        if ($this->isRecruiter()) {
+            return '/dashboard/recruiter';
+        }
+
+        return '/dashboard/job-seeker';
     }
 }
