@@ -45,7 +45,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install Composer dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Install NPM dependencies and build
 RUN npm install && npm run build
@@ -61,4 +61,4 @@ EXPOSE ${PORT}
 # Run a script on startup that sets up caching and starts Apache
 # Note: we use a script or run directly.
 # Let's write a simple startup script directly in CMD or run apache
-CMD php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && apache2-foreground
+CMD php artisan package:discover && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && apache2-foreground

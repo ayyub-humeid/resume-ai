@@ -33,7 +33,7 @@
         </div>
     </header>
     {{ $slot }}
-    <footer class="border-t border-white/5 py-8 text-center text-sm text-slate-500">© {{ date('Y') }} Resume AI. {{ __('Better matches, clearer decisions.') }}</footer>
+    <footer class="border-t border-white/5 py-8 text-center text-sm text-slate-500">© {{ date('Y') }} Resume AI. {{ __('Better matches, clearer decisions.') }} Powered by E. Ayyub Humeid.</footer>
     @livewireScripts
 </body>
 </html>
