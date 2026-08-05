@@ -23,6 +23,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
 
+# Configure PHP upload limits for Livewire bulk upload
+RUN echo "upload_max_filesize = 100M\npost_max_size = 100M\nmemory_limit = 256M" > /usr/local/etc/php/conf.d/uploads.ini
+
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
